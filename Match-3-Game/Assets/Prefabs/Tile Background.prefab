@@ -39,7 +39,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711164448796419346}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -95,3 +95,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0434bd54d4d3e44dbb4b03b29a70a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dots:
+  - {fileID: 8356181049782714748, guid: 16a37e7bd6077af4ead3d7b2e7099726, type: 3}
+  - {fileID: 7323441684477282424, guid: 70fc369bd7b332447802e90926c37c5b, type: 3}
+  - {fileID: 676425000376019735, guid: 6c36d9d1f6cc1eb48b05f53b542e5d75, type: 3}
+  - {fileID: 2819731608259793555, guid: af2ffd15f39c14f4fb06ab871c2c77a5, type: 3}
+  - {fileID: 2109684001560261986, guid: 05c5b3c75078c6640b9f3e424c97c7f9, type: 3}
+  - {fileID: 5339388193481843736, guid: 70545dbdc39c7dd40a04b156749a9c1b, type: 3}
+  - {fileID: 266149346713609054, guid: af9c33adc2576054ca17bc40a201311c, type: 3}
+  - {fileID: 2475088439771753524, guid: e0ced0411482f964098beb166ca2625d, type: 3}
