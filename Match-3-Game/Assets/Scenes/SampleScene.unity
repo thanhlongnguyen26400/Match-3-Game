@@ -260,4 +260,5 @@ MonoBehaviour:
   - {fileID: 2475088439771753524, guid: e0ced0411482f964098beb166ca2625d, type: 3}
   width: 7
   height: 10
+  offSet: 20
   tilePrefab: {fileID: 711164448796419346, guid: bb667ea4052d7d349928102330051684, type: 3}
