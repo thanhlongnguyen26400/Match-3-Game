@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 5010eea3c0cf5034eabbf258fbf11487, type: 3}
   m_Color: {r: 0.6336977, g: 0.12322002, b: 0.6698113, a: 1}
   m_FlipX: 0
@@ -112,8 +112,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5617c0ef93f2c4797ca7b94b4d7976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swipeAngle: 0
   column: 0
   row: 0
+  previousColumn: 0
+  previousRow: 0
   targetX: 0
   targetY: 0
+  isMatches: 0
+  swipeAngle: 0
+  swipeResist: 1
+  isColumnBomb: 0
+  isRowBomb: 0
+  rowArrow: {fileID: 7623691989475963587, guid: b6943d044015b0748bb32642244f6b90, type: 3}
+  columnArrow: {fileID: 3767651404960959989, guid: 1167ea8d5c4aafe408badd3864ad475a, type: 3}

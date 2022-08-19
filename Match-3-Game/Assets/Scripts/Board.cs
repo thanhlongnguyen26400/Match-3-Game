@@ -2,21 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    wait,
+    move,
+
+}
+
+
 public class Board : MonoBehaviour
 {
+
+    public GameState currentState = GameState.move;
     public GameObject[] dots;
+    public GameObject tilePrefab;
+    public GameObject[,] allDots;
+    public GameObject destroyEffect;
 
     public int width;
     public int height;
     public int offSet;
-    public GameObject tilePrefab;
-    public GameObject[,] allDots;
-
+    
     private BackgroundTile[,] allTiles;
+
+    private FindMatches findMatches;
 
     // Start is called before the first frame update
     void Start()
     {
+        findMatches = FindObjectOfType<FindMatches>();
         allTiles =  new BackgroundTile[width,height]; 
         allDots = new GameObject[width,height]; 
         Setup();
@@ -40,8 +54,9 @@ public class Board : MonoBehaviour
                 }
                 
                 GameObject dot = Instantiate(dots[RandomId], tempPosition, Quaternion.identity);
-                dot.GetComponent<Dot>().row = y;
-                dot.GetComponent<Dot>().column = x;
+                dot.GetComponent<Dot>().row = y; 
+                dot.GetComponent<Dot>().column = x; // b? sung compoment Dot vào GameObject Dot
+
 
                 dot.transform.parent = transform;
                 dot.name = "( " + x + "_" + y + " )";
@@ -84,6 +99,11 @@ public class Board : MonoBehaviour
     {
         if (allDots[column, row].GetComponent<Dot>().isMatches)
         {
+            // at the same time destroy allDot[x,y] at Board and remove allDot[x,y] at list<obj>
+            findMatches.currentMatches.Remove(allDots[column, row]);
+            GameObject partice = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
+            Destroy(partice, 1f);
+
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
         }
@@ -119,6 +139,7 @@ public class Board : MonoBehaviour
                 else if( nullCount > 0)
                 {
                     allDots[x, y].GetComponent<Dot>().row -= nullCount; // ??
+                    
                     allDots[x, y] = null;
                 }
             }
@@ -178,5 +199,8 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             DestroyMatches(); // destroy khi có matches
         }
+
+        yield return new WaitForSeconds(0.5f);
+        currentState = GameState.move;
     }
 }
