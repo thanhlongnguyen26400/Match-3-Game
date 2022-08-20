@@ -18,7 +18,7 @@ public class FindMatches : MonoBehaviour
     public void FindAllMatches()
     {
         StartCoroutine(FindAllMatchesCo());
-    }
+    } 
 
     IEnumerator FindAllMatchesCo()
     {
@@ -88,5 +88,41 @@ public class FindMatches : MonoBehaviour
             }
         }
     }
+
+    List<GameObject> GetColumnPieces(int column)
+    {
+        List<GameObject> dots = new List<GameObject>();
+        for (int y = 0; y < board.height; y++)
+        {
+            if (board.allDots[column, y] != null)
+            {
+                dots.Add(board.allDots[column, y]);
+                board.allDots[column, y].GetComponent<Dot>().isMatches = true;
+
+            }
+        }
+
+        return dots;
+    }
+
+
+    // lay tat
+    List<GameObject> GetRowPieces(int row)
+    {
+        List<GameObject> dots = new List<GameObject>();
+        for (int x = 0; x < board.width; x++)
+        {
+            if (board.allDots[x, row] != null)
+            {
+                dots.Add(board.allDots[x, row]);
+                board.allDots[x, row].GetComponent<Dot>().isMatches = true;
+
+            }
+        }
+
+        return dots;
+    }
+
+
 
 }

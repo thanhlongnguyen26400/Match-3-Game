@@ -124,4 +124,4 @@ MonoBehaviour:
   isColumnBomb: 0
   isRowBomb: 0
   rowArrow: {fileID: 7623691989475963587, guid: b6943d044015b0748bb32642244f6b90, type: 3}
-  columnArrow: {fileID: 3767651404960959989, guid: 1167ea8d5c4aafe408badd3864ad475a, type: 3}
+  columnArrow: {fileID: 5407342809831802978, guid: 2f3d293d6b9192845beed320d56f6444, type: 3}

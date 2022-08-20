@@ -53,7 +53,7 @@ public class Dot : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             isColumnBomb = true;
-            GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+            GameObject arrow = Instantiate(columnArrow, transform.position,  Quaternion.identity);
             arrow.transform.parent = transform;
         }
     }
