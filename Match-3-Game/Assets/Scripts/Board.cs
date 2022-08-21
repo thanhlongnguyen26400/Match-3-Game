@@ -18,6 +18,7 @@ public class Board : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[,] allDots;
     public GameObject destroyEffect;
+    public Dot currentDot;
 
     public int width;
     public int height;
@@ -42,7 +43,7 @@ public class Board : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector2 tempPosition = new Vector2(x, y + offSet);
-                GameObject backgroundTile =   Instantiate(tilePrefab, tempPosition, Quaternion.identity);
+                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
                 backgroundTile.transform.parent = transform;  
                 backgroundTile.name = "( " + x + "_" + y + " )";
 
@@ -55,7 +56,7 @@ public class Board : MonoBehaviour
                 
                 GameObject dot = Instantiate(dots[RandomId], tempPosition, Quaternion.identity);
                 dot.GetComponent<Dot>().row = y; 
-                dot.GetComponent<Dot>().column = x; // b? sung compoment Dot vào GameObject Dot
+                dot.GetComponent<Dot>().column = x; // tham chieu Component Dot
 
 
                 dot.transform.parent = transform;
@@ -100,6 +101,10 @@ public class Board : MonoBehaviour
         if (allDots[column, row].GetComponent<Dot>().isMatches)
         {
             // at the same time destroy allDot[x,y] at Board and remove allDot[x,y] at list<obj>
+            if(findMatches.currentMatches.Count == 4 || findMatches.currentMatches.Count == 7)
+            {
+                findMatches.CheckBomb();
+            }
             findMatches.currentMatches.Remove(allDots[column, row]);
             GameObject partice = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(partice, 1f);
@@ -199,7 +204,7 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             DestroyMatches(); // destroy khi có matches
         }
-
+        findMatches.currentMatches.Clear();
         yield return new WaitForSeconds(0.5f);
         currentState = GameState.move;
     }

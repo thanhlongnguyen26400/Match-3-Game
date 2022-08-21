@@ -16,7 +16,7 @@ public class Dot : MonoBehaviour
     public bool isMatches = false;
 
     private Board board;
-    private GameObject otherDot;
+    public GameObject otherDot;
     private FindMatches findMatches;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
@@ -29,6 +29,7 @@ public class Dot : MonoBehaviour
     [Header("Powerup Stuff")]
     public bool isColumnBomb;
     public bool isRowBomb;
+    public bool isGeneratingBombs;
     public GameObject rowArrow;
     public GameObject columnArrow;
 
@@ -53,7 +54,8 @@ public class Dot : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             isColumnBomb = true;
-            GameObject arrow = Instantiate(columnArrow, transform.position,  Quaternion.identity);
+            Debug.Log("is row bomb " + isColumnBomb);
+            GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
             arrow.transform.parent = transform;
         }
     }
@@ -63,11 +65,6 @@ public class Dot : MonoBehaviour
     void Update()
     {
         /*        FindMatches();*/
-        if (isMatches)
-        {
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(1f, 1f, 1f, .2f);
-        }
         targetX = column;
         targetY = row;
         move();
@@ -128,6 +125,8 @@ public class Dot : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if(otherDot != null)
         {
+
+            // check khi khong tim thay matches thi se tra lai vi tri ban dau
             if (!isMatches && !otherDot.GetComponent<Dot>().isMatches)
             {
                 otherDot.GetComponent<Dot>().row = row;
@@ -135,6 +134,7 @@ public class Dot : MonoBehaviour
                 row = previousRow;
                 column = previousColumn;
                 yield return new WaitForSeconds(0.5f);
+                board.currentDot = null;
                 board.currentState = GameState.move;
             }
             else
@@ -170,14 +170,18 @@ public class Dot : MonoBehaviour
             // check kéo th? chu?t theo góc (180 ??)
             swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             MovePiece();
-            board.currentState = GameState.wait;
+            board.currentState = GameState.wait; 
+            board.currentDot = this;
         }
         else
         {
             board.currentState = GameState.move;
+            
         }
     }
 
+
+    //  vuot theo huong
     void MovePiece()
     {
         if(swipeAngle > - 45 && swipeAngle <= 45 && column < board.width -1 )
@@ -219,42 +223,18 @@ public class Dot : MonoBehaviour
         StartCoroutine(checkMoveCo());
     }
 
-    void FindMatches()
+    public void MakeRowBomb()
     {
-
-        // check horizontal if left and right same type => ismatch
-        if (column > 0 && column < board.width - 1 )
-        {
-            GameObject leftDot1 = board.allDots[column - 1, row];
-            GameObject rightDot1 = board.allDots[column + 1, row];
-            if(leftDot1 != null && rightDot1 != null)
-            {
-                if (leftDot1.tag == gameObject.tag && rightDot1.tag == gameObject.tag)
-                {
-                    leftDot1.GetComponent<Dot>().isMatches = true;
-                    rightDot1.GetComponent<Dot>().isMatches = true;
-                    isMatches = true;
-                }
-            }
-             
-        }
-
-
-        // check vetical if up and down same type => ismatch
-        if (row > 0 && row < board.height - 1)
-        {
-            GameObject upDot1 = board.allDots[column , row + 1];
-            GameObject downDot1 = board.allDots[column , row -1 ] ;
-            if(upDot1 != null && downDot1 != null)
-            {
-                if (upDot1.tag == gameObject.tag && downDot1.tag == gameObject.tag)
-                {
-                    upDot1.GetComponent<Dot>().isMatches = true;
-                    downDot1.GetComponent<Dot>().isMatches = true;
-                    isMatches = true;
-                }
-            }
-            
-        }
-    } 
+        isRowBomb = true;
+        Debug.Log("is row bomb " + isRowBomb);
+        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = transform;
+    }
+    public void MakeColumnBomb()
+    {
+        isColumnBomb = true;
+        Debug.Log("is row bomb " + isColumnBomb);
+        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = transform;
+    }
 }
