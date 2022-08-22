@@ -18,6 +18,7 @@ public class Board : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[,] allDots;
     public GameObject destroyEffect;
+    public Dot currentDot;
 
     public int width;
     public int height;
@@ -100,6 +101,10 @@ public class Board : MonoBehaviour
         if (allDots[column, row].GetComponent<Dot>().isMatches)
         {
             // at the same time destroy allDot[x,y] at Board and remove allDot[x,y] at list<obj>
+            if (findMatches.currentMatches.Count == 4 || findMatches.currentMatches.Count == 7)
+            {
+                findMatches.CheckBomb();
+            }
             findMatches.currentMatches.Remove(allDots[column, row]);
             GameObject partice = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(partice, 1f);
@@ -199,7 +204,8 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             DestroyMatches(); // destroy khi có matches
         }
-
+        findMatches.currentMatches.Clear();
+        currentDot = null;
         yield return new WaitForSeconds(0.5f);
         currentState = GameState.move;
     }

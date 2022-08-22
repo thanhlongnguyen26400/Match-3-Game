@@ -257,8 +257,10 @@ MonoBehaviour:
   - {fileID: 676425000376019735, guid: 6c36d9d1f6cc1eb48b05f53b542e5d75, type: 3}
   - {fileID: 2819731608259793555, guid: af2ffd15f39c14f4fb06ab871c2c77a5, type: 3}
   - {fileID: 2109684001560261986, guid: 05c5b3c75078c6640b9f3e424c97c7f9, type: 3}
+  - {fileID: 5339388193481843736, guid: 70545dbdc39c7dd40a04b156749a9c1b, type: 3}
   tilePrefab: {fileID: 711164448796419346, guid: bb667ea4052d7d349928102330051684, type: 3}
   destroyEffect: {fileID: 2676294267315333907, guid: f3c8dd173b0334a4f9a35e74889aa5ed, type: 3}
+  currentDot: {fileID: 0}
   width: 7
   height: 10
   offSet: 20

@@ -16,7 +16,7 @@ public class Dot : MonoBehaviour
     public bool isMatches = false;
 
     private Board board;
-    private GameObject otherDot;
+    public GameObject otherDot;
     private FindMatches findMatches;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
@@ -27,16 +27,23 @@ public class Dot : MonoBehaviour
     public float swipeResist = 1f;
 
     [Header("Powerup Stuff")]
+    public bool isColorBomb;
     public bool isColumnBomb;
     public bool isRowBomb;
+    public bool isAdjacentBomb;
+    public GameObject adjacentMarker;
     public GameObject rowArrow;
     public GameObject columnArrow;
+    public GameObject colorBomb;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         isColumnBomb = false;
         isRowBomb = false;
+        isColorBomb = false;
+        isAdjacentBomb = false;
 
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();   
@@ -52,9 +59,10 @@ public class Dot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            isColumnBomb = true;
-            GameObject arrow = Instantiate(columnArrow, transform.position,  Quaternion.identity);
-            arrow.transform.parent = transform;
+            isAdjacentBomb = true;
+            Debug.Log("adjacentMarker");
+            GameObject marker = Instantiate(adjacentMarker, transform.position,  Quaternion.identity);
+            marker.transform.parent = transform;
         }
     }
 
@@ -62,12 +70,7 @@ public class Dot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*        FindMatches();*/
-        if (isMatches)
-        {
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(1f, 1f, 1f, .2f);
-        }
+
         targetX = column;
         targetY = row;
         move();
@@ -124,7 +127,18 @@ public class Dot : MonoBehaviour
 
     public IEnumerator checkMoveCo()
     {
-
+        if (isColorBomb)
+        {
+            //this piece is a color bomb and the otehr piece is the color the destroy
+            findMatches.MatchPieceOfColor(otherDot.tag);
+            isMatches = true;
+        }
+        else if (otherDot.GetComponent<Dot>().isColorBomb)
+        {
+            // the other piece is a color bomb and thes piece has the color to destroy 
+            findMatches.MatchPieceOfColor(this.gameObject.tag);
+            otherDot.GetComponent<Dot>().isMatches = true;
+        }
         yield return new WaitForSeconds(0.5f);
         if(otherDot != null)
         {
@@ -135,13 +149,14 @@ public class Dot : MonoBehaviour
                 row = previousRow;
                 column = previousColumn;
                 yield return new WaitForSeconds(0.5f);
+                board.currentDot = null;
                 board.currentState = GameState.move;
             }
             else
             {
                 board.DestroyMatches();
             }
-            otherDot = null;
+            //otherDot = null;
         }
         
     } 
@@ -171,6 +186,7 @@ public class Dot : MonoBehaviour
             swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             MovePiece();
             board.currentState = GameState.wait;
+            board.currentDot = this;
         }
         else
         {
@@ -218,43 +234,20 @@ public class Dot : MonoBehaviour
         }
         StartCoroutine(checkMoveCo());
     }
-
-    void FindMatches()
+    public void MakeRowBomb()
     {
-
-        // check horizontal if left and right same type => ismatch
-        if (column > 0 && column < board.width - 1 )
-        {
-            GameObject leftDot1 = board.allDots[column - 1, row];
-            GameObject rightDot1 = board.allDots[column + 1, row];
-            if(leftDot1 != null && rightDot1 != null)
-            {
-                if (leftDot1.tag == gameObject.tag && rightDot1.tag == gameObject.tag)
-                {
-                    leftDot1.GetComponent<Dot>().isMatches = true;
-                    rightDot1.GetComponent<Dot>().isMatches = true;
-                    isMatches = true;
-                }
-            }
-             
-        }
+        isRowBomb = true;
+        Debug.Log("is row bomb " + isRowBomb);
+        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = transform;
+    }
+    public void MakeColumnBomb()
+    {
+        isColumnBomb = true;
+        Debug.Log("is isColumnBomb bomb " + isColumnBomb);
+        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = transform;
+    }
 
 
-        // check vetical if up and down same type => ismatch
-        if (row > 0 && row < board.height - 1)
-        {
-            GameObject upDot1 = board.allDots[column , row + 1];
-            GameObject downDot1 = board.allDots[column , row -1 ] ;
-            if(upDot1 != null && downDot1 != null)
-            {
-                if (upDot1.tag == gameObject.tag && downDot1.tag == gameObject.tag)
-                {
-                    upDot1.GetComponent<Dot>().isMatches = true;
-                    downDot1.GetComponent<Dot>().isMatches = true;
-                    isMatches = true;
-                }
-            }
-            
-        }
-    } 
 }
