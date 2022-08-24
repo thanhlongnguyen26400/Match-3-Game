@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3395720399417886263}
   - component: {fileID: 4286154075209670889}
   m_Layer: 0
-  m_Name: Indio Dot
+  m_Name: Purple Dot
   m_TagString: Indio Dot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5010eea3c0cf5034eabbf258fbf11487, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd7c3907c205d1f43a2d7f16309f84d7, type: 3}
   m_Color: {r: 0.6336977, g: 0.12322002, b: 0.6698113, a: 1}
   m_FlipX: 0
   m_FlipY: 0

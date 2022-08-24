@@ -32,6 +32,7 @@ public class Board : MonoBehaviour
     public GameState currentState = GameState.move;
     public GameObject[] dots;
     public GameObject tilePrefab;
+    public GameObject breakableTilePrefab;
     public GameObject[,] allDots;
     public GameObject destroyEffect;
     public Dot currentDot;
@@ -48,16 +49,19 @@ public class Board : MonoBehaviour
 
     private FindMatches findMatches;
 
+    private BackgroundTile[,] breakableTiles;
+
     // Start is called before the first frame update
     void Start()
     {
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces =  new bool[width, height];
-        allDots = new GameObject[width,height]; 
+        allDots = new GameObject[width,height];
+        breakableTiles = new BackgroundTile[width,height];
         Setup();
     }
 
-    // ????????????????????????
+    // blankSpaces check khong gian co gia tri khong ko
     public void GenarateBlankSpaces()
     {
         for (int i = 0; i < boardLayout.Length; i++)
@@ -69,15 +73,33 @@ public class Board : MonoBehaviour
         }
     }
 
+    public void GenerateBreakableTiles()
+    {
+        // look at all the tiles in the layout
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            // if a tiles is a "Jelly" tile
+            if (boardLayout[i].tileKind == TileKind.Breakable)
+            {
+                // Ceate a "Jelly" ile at that position
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
+                breakableTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+            }
+        }
+    }
+
+
     void Setup()
     {
         GenarateBlankSpaces();
+        GenerateBreakableTiles();
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
 
-                if (!blankSpaces[x, y]) // ????????????
+                if (!blankSpaces[x, y]) // Neu x, y truyen vao bang voi blankSpaces la true => bo qua Dot vi tri x,y
                 {
                     Vector2 tempPosition = new Vector2(x, y + offSet);
                     GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
@@ -107,7 +129,7 @@ public class Board : MonoBehaviour
     }
     private bool MatchesAt(int column, int row, GameObject piece)
     {
-        // kiêm tra khi b?t ??u game nh?ng dot ko ???c trùng nhau
+        // kiêm tra khi bat dauu game nhung dot ko dc trùng nhau
 
 
         // check t? v? trí 2-2 -> h?t trong board
@@ -130,14 +152,16 @@ public class Board : MonoBehaviour
             }
             // -----------------------------------------------------------------//
         }
-        // check v? trí 0-0 -> 1-1
+        // check v? trí 1-1 -> 0-0
         else if (column <= 1 || row <= 1)
         {
             if (row > 1)
-                if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag) return true;
+                if (allDots[column, row - 1] != null && allDots[column, row - 2] != null)
+                    if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag) return true;
 
             if (column > 1)
-                if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag) return true;
+                if (allDots[column -1, row] != null && allDots[column -2, row] != null)
+                    if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag) return true;
 
         }
         return false;
@@ -145,25 +169,24 @@ public class Board : MonoBehaviour
 
     bool ColumnOrRow()
     {
-        int numberHozizontal = 0;
-        int numberVertical = 0;
+        int count = 0;
         Dot firstPiece = findMatches.currentMatches[0].GetComponent<Dot>();
         if(firstPiece != null)
         {
             foreach (GameObject currentPiece in findMatches.currentMatches)
             {
                 Dot dot = currentPiece.GetComponent<Dot>();
-                if(dot.row == firstPiece.row && firstPiece.gameObject.tag == currentPiece.tag)
+                if(dot.row == firstPiece.row && firstPiece.gameObject.CompareTag(currentPiece.tag))
                 {
-                    numberHozizontal++;
+                    count++;
                 }
-                if(dot.column == firstPiece.column && firstPiece.gameObject.tag == currentPiece.tag)
+                if(dot.column == firstPiece.column && firstPiece.gameObject.CompareTag(currentPiece.tag))
                 {
-                    numberVertical++;
+                    count++;
                 }
             }
         }
-        return (numberVertical == 5 || numberHozizontal == 5);
+        return count >= 5;
         
     }
 
@@ -242,11 +265,18 @@ public class Board : MonoBehaviour
             // at the same time destroy allDot[x,y] at Board and remove allDot[x,y] at list<obj>
             if (findMatches.currentMatches.Count >= 4 )
             {
-                currentState = GameState.wait;
                 CheckToMakeBomb();
-                
             }
-            findMatches.currentMatches.Remove(allDots[column, row]);
+            if(breakableTiles[column, row] != null)
+            {
+                // if it does, give one damage
+                breakableTiles[column, row].TakeDamage(1);
+                if (breakableTiles[column, row].hitPoints <= 0)
+                {
+                    breakableTiles[column, row] = null; 
+                }
+            }
+            
             GameObject partice = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity); // hieu ung
             Destroy(partice, 1f); // destroy sau 1s
 
@@ -267,7 +297,36 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(DecreaseRowCo());
+        findMatches.currentMatches.Clear();
+        StartCoroutine(DecreaseRowCo2());
+    }
+
+    private IEnumerator DecreaseRowCo2()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                // if the current spot isn't blank or empty
+                if (!blankSpaces[x,y] && allDots[x,y] == null)
+                {
+                    // loop from the space above to the top of the column
+                    for (int k = y + 1; k < height; k++)
+                    {
+                        if (allDots[x,k] != null)
+                        {
+                            // move that dot to this empty space
+                            allDots[x, k].GetComponent<Dot>().row = y;
+                            //set that spot to be null
+                            allDots[x, k] = null;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        yield return new WaitForSeconds(0.4f);
+        StartCoroutine(FillBoardCo());
     }
 
     private IEnumerator DecreaseRowCo()
@@ -303,7 +362,7 @@ public class Board : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if (allDots[x,y] == null)
+                if (allDots[x,y] == null && !blankSpaces[x,y])
                 {
                     Vector2 tempPosition = new Vector2(x, y + offSet);
                     int RandomId = Random.Range(0, dots.Length);
@@ -351,6 +410,152 @@ public class Board : MonoBehaviour
         findMatches.currentMatches.Clear();
         currentDot = null;
         yield return new WaitForSeconds(0.5f);
+
+        if (IsDeadlocked())
+        {
+            ShuffleBoard();
+            Debug.Log("IsDeadlocked");
+        }
         currentState = GameState.move;
     }
+
+
+    private void SwitchPieces(int column, int row, Vector2 direction)
+    {
+        // take the second piece and save it in a holder
+        GameObject holder = allDots[column + (int)direction.x, row + (int)direction.y] as GameObject; 
+        // switching the first dot to be the second position
+        allDots[column + (int)direction.x, row + (int)direction.y] = allDots[column, row];
+        //Set the first dot to be the second dot
+        allDots[column, row] = holder;
+    }
+
+    private bool CheckForMatches()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (allDots[x,y]!= null)
+                {
+                    if(x < width - 2)
+                    {
+                        // Check if the dots to the right and two to the right exist
+                        if (allDots[x + 1, y] != null && allDots[x + 2, y] != null)
+                        {
+                            if (allDots[x + 1, y].tag == allDots[x, y].tag
+                                && allDots[x + 2, y].tag == allDots[x, y].tag)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    if(y < height - 2)
+                    {
+                        // Check if the dots above  exist
+                        if (allDots[x, y + 1] != null && allDots[x, y + 2])
+                        {
+                            if (allDots[x, y + 1].tag == allDots[x, y].tag
+                                && allDots[x, y + 2].tag == allDots[x, y].tag)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+        return false;
+    }
+    // check theo huong, kiem tra direction co 2 Dot cung Tag hay khong. Muc dich tim xem tren Board co matches hay khong
+    public bool SwitchAndCheck(int column, int row, Vector2 direction)
+    {
+        SwitchPieces(column, row, direction); // hoan doi Dot theo huong ( vd: up or right)
+        if (CheckForMatches()) // khi dc hoan doi thi check xem 2 Dot Right or Up co cung Tag hay khong
+        {
+            SwitchPieces(column, row, direction);
+            return true;
+           
+        }
+        SwitchPieces(column, row, direction);
+        return false;
+        
+    }
+
+    private bool IsDeadlocked()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (allDots[x,y] != null)
+                {
+                    if(x < width - 1)
+                    {
+                        // kiemm tra ben tren co cung kieu hay khong
+                        if(SwitchAndCheck(x, y, Vector2.right))
+                        {
+                            return false;
+                        }
+                        
+                    }
+                    if(y < height - 1)
+                    {
+                        if(SwitchAndCheck(x,y, Vector2.up))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void ShuffleBoard()
+    {
+        // Create a list Game object
+        List<GameObject> newBoard = new List<GameObject>();
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (allDots[x,y] != null)
+                {
+                    newBoard.Add(allDots[x,y]);
+                }
+            }
+        }
+        // for every spot on the board
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                // if this spot shouldn't be blank
+                if (!blankSpaces[x, y])
+                {
+                    // pick a random number
+                    int pieceToUse = Random.Range(0, newBoard.Count);
+                    
+                    while (MatchesAt(x, y, newBoard[pieceToUse]))
+                    {
+                        pieceToUse = Random.Range(0, newBoard.Count);
+                    }
+                    Dot piece = newBoard[pieceToUse].GetComponent<Dot>(); // make a container for the piece
+
+                    piece.column = x; 
+                    piece.row = y; // gan lai column and row cho piece
+                    allDots[x, y] = newBoard[pieceToUse]; // allDots duoc gan lai voi nhung object da dc random
+                    newBoard.Remove(newBoard[pieceToUse]); // xoa List object 
+                }
+            }
+        }
+        // check if is deadlocked
+        if (IsDeadlocked())
+        {
+            ShuffleBoard();
+        }
+    }
+
 }
