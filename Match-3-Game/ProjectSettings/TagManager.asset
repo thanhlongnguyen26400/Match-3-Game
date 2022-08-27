@@ -46,6 +46,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1665079019
+    locked: 0
+  - name: Forceground
+    uniqueID: 1991481053
+    locked: 0
+  - name: Effect
+    uniqueID: 4101577663
+    locked: 0
+  - name: Score
+    uniqueID: 1645034463
+    locked: 0
+  - name: Dot
+    uniqueID: 485410963
+    locked: 0
+  - name: Bomb
+    uniqueID: 3109466847
+    locked: 0
+  - name: Layout
+    uniqueID: 1188566463
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

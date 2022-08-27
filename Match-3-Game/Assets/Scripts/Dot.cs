@@ -176,7 +176,7 @@ public class Dot : MonoBehaviour
             //otherDot = null;
         }
         
-    } 
+    }
 
     void OnMouseDown()
     {

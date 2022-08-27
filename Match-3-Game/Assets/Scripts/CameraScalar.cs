@@ -8,6 +8,7 @@ public class CameraScalar : MonoBehaviour
     public float cameraOffSet;
     public float aspectRario = 0.625f;
     public float padding = 2;
+    public float yOffset = 1;
 
 
     // Start is called before the first frame update
@@ -19,9 +20,9 @@ public class CameraScalar : MonoBehaviour
             RepositionCamera(board.width -1 , board.height-1);
         }
     }
-    void RepositionCamera(float x, float y )
+    void RepositionCamera(float x, float y ) 
     {
-        Vector3 tempPosition = new Vector3( (float)x / 2, (float)y / 2, cameraOffSet);
+        Vector3 tempPosition = new Vector3( (float)x / 2, (float)y / 2 + yOffset, cameraOffSet);
         transform.position = tempPosition;
         if(board.width >= board.height)
         {
