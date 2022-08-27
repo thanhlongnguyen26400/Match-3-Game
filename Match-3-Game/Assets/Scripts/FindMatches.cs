@@ -256,7 +256,7 @@ public class FindMatches : MonoBehaviour
                 }
             }
             // is the other piece matches
-            else 
+            else
             {
                 Dot otherDot = board.currentDot.otherDot.GetComponent<Dot>();
                 if (board.currentDot.otherDot != null && otherDot.isMatches)
@@ -273,7 +273,6 @@ public class FindMatches : MonoBehaviour
                         otherDot.MakeColumnBomb();
                     }
                 }
-                
             }
         }
         
