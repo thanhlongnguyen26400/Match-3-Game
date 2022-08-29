@@ -58,11 +58,14 @@ public class Board : MonoBehaviour
 
     private AudioController audioController;
 
+    private GoalManager goalManager;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        goalManager = FindObjectOfType<GoalManager>();
         findMatches = FindObjectOfType<FindMatches>();
         scoreManager = FindObjectOfType<ScoreManager>();
         hintManager = FindObjectOfType<HintManager>();
@@ -294,6 +297,13 @@ public class Board : MonoBehaviour
                     breakableTiles[column, row] = null; 
                 }
             }
+
+            if(goalManager != null)
+            {
+                goalManager.CompareGoal(allDots[column, row].tag.ToString());
+                goalManager.UpdateGoals();
+            }
+
             
             GameObject partice = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity); // hieu ung
             Destroy(partice, 1f); // destroy sau 1s

@@ -25,7 +25,20 @@ public class FadePanelController : MonoBehaviour
 
             panelAnim.SetBool("Out", true);
             gameInfoAnim.SetBool("Out", true);
+            panelAnim.SetBool("Checkin", false);
+            Debug.Log("OK");
         }
         
+    }
+
+    public void Check()
+    {
+        
+        if (panelAnim != null)
+        {
+            gameInfoAnim.SetTrigger("Checkin");
+            gameInfoAnim.SetBool("Out", false);
+            Debug.Log("OK check in");
+        }
     }
 }
