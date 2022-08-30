@@ -9,8 +9,12 @@ public class FadePanelController : MonoBehaviour
     public Animator gameInfoAnim;
 
 
+    private Board board;
+
+
     private void Start()
     {
+        board = GetComponent<Board>();
         if (panelAnim != null && gameInfoAnim != null)
         {
             panelAnim.SetBool("Out", false);
@@ -25,10 +29,15 @@ public class FadePanelController : MonoBehaviour
 
             panelAnim.SetBool("Out", true);
             gameInfoAnim.SetBool("Out", true);
-            panelAnim.SetBool("Checkin", false);
-            Debug.Log("OK");
+            Debug.Log("lick ok");
+            StartCoroutine(GameStartCo());           
         }
         
+    }
+    public void GameOver()
+    {
+        panelAnim.SetBool("Out", false);
+        panelAnim.SetBool("GameOver", true);
     }
 
     public void Check()
@@ -40,5 +49,16 @@ public class FadePanelController : MonoBehaviour
             gameInfoAnim.SetBool("Out", false);
             Debug.Log("OK check in");
         }
+    }
+
+    IEnumerator GameStartCo()
+    {
+        Board board = FindObjectOfType<Board>();
+        if(board.currentState == GameState.pause)
+        {
+            yield return new WaitForSeconds(1f);
+            board.currentState = GameState.move;
+        }
+       
     }
 }

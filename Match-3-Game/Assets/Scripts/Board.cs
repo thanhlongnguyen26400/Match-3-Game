@@ -6,6 +6,9 @@ public enum GameState
 {
     wait,
     move,
+    win, 
+    lose,
+    pause
 
 }
 public enum TileKind
@@ -29,21 +32,30 @@ public class TileType
 public class Board : MonoBehaviour
 {
 
+
+    [Header ("Scriptable Object Stuff")]
+    public World world;
+    public int level;
+
     public GameState currentState = GameState.move;
+
+    [Header("Prefab")]
     public GameObject[] dots;
     public GameObject tilePrefab;
     public GameObject breakableTilePrefab;
     public GameObject[,] allDots;
     public GameObject destroyEffect;
     public Dot currentDot;
-    public float refillDelay = 0.5f;
+    public float refillDelay = 0.2f;
     public int[] scoreGoals;
-    
 
+    [Header("Board Dimansions")]
     public int width;
     public int height;
     public int offSet;
 
+
+    [Header("Layout")]
     public TileType[] boardLayout;
 
     private bool[,] blankSpaces;
@@ -62,6 +74,26 @@ public class Board : MonoBehaviour
 
 
 
+    private void Awake()
+    {
+        if(world != null)
+        {
+            if(level < world.level.Length)
+            {
+                if (world.level[level] != null)
+                {
+                    width = world.level[level].width;
+                    height = world.level[level].height;
+                    dots = world.level[level].Dots;
+                    scoreGoals = world.level[level].scoreGoals;
+                    boardLayout = world.level[level].boardLayout;
+                }
+            }
+            
+        }
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +105,7 @@ public class Board : MonoBehaviour
         blankSpaces =  new bool[width, height];
         allDots = new GameObject[width,height];
         breakableTiles = new BackgroundTile[width,height];
+        currentState = GameState.pause;
         Setup();
     }
 
@@ -100,6 +133,8 @@ public class Board : MonoBehaviour
                 Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
                 GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
                 breakableTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+                tile.transform.parent = transform;
+                tile.name = "( " + boardLayout[i].x + "_" + boardLayout[i].y + " )";
             }
         }
     }
@@ -121,7 +156,6 @@ public class Board : MonoBehaviour
                     GameObject backgroundTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
                     backgroundTile.transform.parent = transform;
                     backgroundTile.name = "( " + x + "_" + y + " )";
-
 
                     int RandomId = Random.Range(0, dots.Length);
                     while (MatchesAt(x, y, dots[RandomId]))

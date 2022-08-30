@@ -17,16 +17,41 @@ public class GoalManager : MonoBehaviour
 {
     public BlankGoal[] levelGoals;
     public GameObject goalPrefab;
+
     public GameObject goalIntroParent;
-    public GameObject goalGameParent;
+
+    private EndGameManager endGameManager;
+
     public GameObject[] goalGame;
 
     public List<GoalPanel> currentGoals = new List<GoalPanel>();
 
+    private Board board;
+
     // Start is called before the first frame update
     void Start()
     {
+        board = FindObjectOfType<Board>();
+        endGameManager = FindObjectOfType<EndGameManager>();
+        GetGoals();
         SetupIntroGoals();
+    }
+    void GetGoals()
+    {
+        if(board != null)
+        {
+            if(board.world != null)
+            {
+                if(board.level < board.world.level.Length)
+                {
+                    if (board.world.level[board.level] != null)
+                    {
+                        levelGoals = board.world.level[board.level].levelGoals;
+                    }
+                }
+                
+            }
+        }
     }
 
     void SetupIntroGoals()
@@ -40,8 +65,9 @@ public class GoalManager : MonoBehaviour
             panel.thisSprite = levelGoals[i].goalSprite;
             panel.thisString = "0/" + levelGoals[i].numberNeeded;
 
-
             currentGoals.Add(panel);
+
+
 
 /*            GameObject goalGame = Instantiate(goalPrefab, goalGameParent.transform.position, Quaternion.identity);
             goalGame.transform.SetParent(goalGameParent.transform);
@@ -49,13 +75,10 @@ public class GoalManager : MonoBehaviour
             panel = goalGame.GetComponent<GoalPanel>();
             panel.thisSprite = levelGoals[i].goalSprite;
             panel.thisString = "0/" + levelGoals[i].numberNeeded;*/
-
-            
-
-
         }
 
     }
+
         
     public void UpdateGoals()
     {
@@ -68,11 +91,17 @@ public class GoalManager : MonoBehaviour
                 goalsComplete++;
                 currentGoals[i].thisText.text = "" + levelGoals[i].numberNeeded + "/" + levelGoals[i].numberNeeded;
             }
+            
         }
-        if(goalsComplete >= levelGoals.Length)
+        if (goalsComplete >= levelGoals.Length)
         {
+            if(endGameManager != null)
+            {
+                endGameManager.WinGame();
+            }
             Debug.Log("You win");
         }
+
     } 
 
     public void CompareGoal(string goalToCompare)
