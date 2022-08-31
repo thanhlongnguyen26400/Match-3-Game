@@ -23,6 +23,9 @@ public class EndGameRequirements
 
 public class EndGameManager : MonoBehaviour
 {
+    public World world;
+    int level;
+
     public GameObject movesLabel;
     public GameObject timeLabel;
     public GameObject youWinPanel;
@@ -37,9 +40,9 @@ public class EndGameManager : MonoBehaviour
 
     private void Awake()
     {
-        
-        currentCounterValue = requirements.counterValue;
-        
+        /* currentCounterValue = world.level[board.level].endGameRequirements.counterValue;*/
+/*        currentCounterValue = requirements.counterValue;*/
+
     }
     // Start is called before the first frame update
     void Start()
@@ -48,7 +51,8 @@ public class EndGameManager : MonoBehaviour
         fadePanelController = FindObjectOfType<FadePanelController>();
         SetGameType();
         SetupGame();
-        
+
+
     }
     void SetGameType()
     {

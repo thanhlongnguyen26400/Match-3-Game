@@ -1333,6 +1333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 689766682}
   - component: {fileID: 689766681}
+  - component: {fileID: 689766683}
   m_Layer: 0
   m_Name: EndGameManager
   m_TagString: Untagged
@@ -1352,6 +1353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686fd26d01df40e4fb290d12a580986c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  world: {fileID: 0}
   movesLabel: {fileID: 1163527864}
   timeLabel: {fileID: 2073583834}
   youWinPanel: {fileID: 35248400}
@@ -1359,7 +1361,7 @@ MonoBehaviour:
   counter: {fileID: 1676574648}
   requirements:
     gameType: 1
-    counterValue: 100
+    counterValue: 0
   currentCounterValue: 0
 --- !u!4 &689766682
 Transform:
@@ -1375,6 +1377,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &689766683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689766680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1992e66e513c2a2439e6ba732ceb3361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Splash
 --- !u!1 &723782631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,7 +1447,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
@@ -2648,7 +2663,7 @@ GameObject:
   - component: {fileID: 1522232568}
   - component: {fileID: 1522232567}
   m_Layer: 5
-  m_Name: Button
+  m_Name: OK btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2718,9 +2733,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1184986808}
-        m_TargetAssemblyTypeName: FadePanelController, Assembly-CSharp
-        m_MethodName: loseGame
+      - m_Target: {fileID: 689766683}
+        m_TargetAssemblyTypeName: BackToSplash, Assembly-CSharp
+        m_MethodName: LoseOK
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2781,7 +2796,7 @@ GameObject:
   - component: {fileID: 1621493719}
   - component: {fileID: 1621493718}
   m_Layer: 5
-  m_Name: Button
+  m_Name: OK btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2851,9 +2866,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1184986808}
-        m_TargetAssemblyTypeName: FadePanelController, Assembly-CSharp
-        m_MethodName: winGame
+      - m_Target: {fileID: 689766683}
+        m_TargetAssemblyTypeName: BackToSplash, Assembly-CSharp
+        m_MethodName: WinOK
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3356,7 +3371,7 @@ GameObject:
   - component: {fileID: 1823845985}
   - component: {fileID: 1823845984}
   m_Layer: 5
-  m_Name: Button
+  m_Name: OK btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

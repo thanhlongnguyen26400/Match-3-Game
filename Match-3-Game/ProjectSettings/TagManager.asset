@@ -12,6 +12,8 @@ TagManager:
   - Salmon Dot
   - Teal Dot
   - Yellow Dot
+  - Blue Dot
+  - Purple Dot
   layers:
   - Default
   - TransparentFX

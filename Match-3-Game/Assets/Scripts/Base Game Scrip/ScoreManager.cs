@@ -11,9 +11,12 @@ public class ScoreManager : MonoBehaviour
     public int score = 0;
     public Image scoreBar;
 
+    private GameData gameData;  
+
     // Start is called before the first frame update
     void Start()
     {
+        gameData = FindObjectOfType<GameData>();
         board = FindObjectOfType<Board>(); 
     }
 
@@ -27,5 +30,6 @@ public class ScoreManager : MonoBehaviour
     public void IncreaseScore(int amountToIncrease)
     {
         score+= amountToIncrease;
+        
     }
 }

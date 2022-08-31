@@ -72,11 +72,25 @@ public class Board : MonoBehaviour
 
     private GoalManager goalManager;
 
+    private EndGameManager endGameManager;
 
 
     private void Awake()
     {
-        if(world != null)
+        goalManager = FindObjectOfType<GoalManager>();
+        findMatches = FindObjectOfType<FindMatches>();
+        scoreManager = FindObjectOfType<ScoreManager>();
+        hintManager = FindObjectOfType<HintManager>();
+        audioController = FindObjectOfType<AudioController>();
+        endGameManager = FindObjectOfType<EndGameManager>();
+
+        // lay Get, Set cua PlayerPrefs 
+        if (PlayerPrefs.HasKey("Current Level"))
+        {
+            level = PlayerPrefs.GetInt("Current Level");
+
+        }
+        if (world != null)
         {
             if(level < world.level.Length)
             {
@@ -87,6 +101,7 @@ public class Board : MonoBehaviour
                     dots = world.level[level].Dots;
                     scoreGoals = world.level[level].scoreGoals;
                     boardLayout = world.level[level].boardLayout;
+                    endGameManager.currentCounterValue = world.level[level].endGameRequirements.counterValue;
                 }
             }
             
@@ -97,11 +112,6 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        goalManager = FindObjectOfType<GoalManager>();
-        findMatches = FindObjectOfType<FindMatches>();
-        scoreManager = FindObjectOfType<ScoreManager>();
-        hintManager = FindObjectOfType<HintManager>();
-        audioController = FindObjectOfType<AudioController>();
         blankSpaces =  new bool[width, height];
         allDots = new GameObject[width,height];
         breakableTiles = new BackgroundTile[width,height];

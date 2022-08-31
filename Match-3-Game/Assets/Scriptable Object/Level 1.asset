@@ -22,8 +22,8 @@ MonoBehaviour:
   - {fileID: 676425000376019735, guid: 6c36d9d1f6cc1eb48b05f53b542e5d75, type: 3}
   scoreGoals: 2c010000bc020000
   endGameRequirements:
-    gameType: 0
-    counterValue: 60
+    gameType: 1
+    counterValue: 45
   levelGoals:
   - numberNeeded: 10
     numberCollected: 0
@@ -32,4 +32,8 @@ MonoBehaviour:
   - numberNeeded: 5
     numberCollected: 0
     goalSprite: {fileID: 21300000, guid: 531ea0065628ad04895f90c736c6ffc0, type: 3}
+    matchValue: Green Dot
+  - numberNeeded: 0
+    numberCollected: 0
+    goalSprite: {fileID: -3814991329465442402, guid: fd66a927ae9989248b396dddf044c3a5, type: 3}
     matchValue: 

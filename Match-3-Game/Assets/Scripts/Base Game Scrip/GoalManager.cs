@@ -28,11 +28,16 @@ public class GoalManager : MonoBehaviour
 
     private Board board;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         board = FindObjectOfType<Board>();
         endGameManager = FindObjectOfType<EndGameManager>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         GetGoals();
         SetupIntroGoals();
     }
@@ -42,12 +47,9 @@ public class GoalManager : MonoBehaviour
         {
             if(board.world != null)
             {
-                if(board.level < board.world.level.Length)
+                if (board.world.level[board.level] != null)
                 {
-                    if (board.world.level[board.level] != null)
-                    {
-                        levelGoals = board.world.level[board.level].levelGoals;
-                    }
+                    levelGoals = board.world.level[board.level].levelGoals;
                 }
                 
             }
@@ -111,8 +113,10 @@ public class GoalManager : MonoBehaviour
             if(goalToCompare == levelGoals[i].matchValue)
             {
                 levelGoals[i].numberCollected++;
+                Debug.Log("da them moi");
             }
         }
+        
     }
 
     // Update is called once per frame
