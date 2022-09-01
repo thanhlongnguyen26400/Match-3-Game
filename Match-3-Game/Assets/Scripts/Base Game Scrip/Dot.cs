@@ -22,6 +22,7 @@ public class Dot : MonoBehaviour
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
     private HintManager hintManager;
+   
 
     [Header("Swipe Stuff")]
     public float swipeAngle = 0;
@@ -36,7 +37,11 @@ public class Dot : MonoBehaviour
     public GameObject rowArrow;
     public GameObject columnArrow;
     public GameObject colorBomb;
-    
+
+    private Animator anim;
+    private float shineDelay;
+    private float shineDelaySeconds;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,23 +50,27 @@ public class Dot : MonoBehaviour
         isRowBomb = false;
         isColorBomb = false;
         isAdjacentBomb = false;
+        shineDelay = Random.Range(3f, 6f);
+        shineDelaySeconds = shineDelay;
 
-        board = FindObjectOfType<Board>();
+/*        board = FindObjectOfType<Board>();*/
         findMatches = FindObjectOfType<FindMatches>();
         hintManager = FindObjectOfType<HintManager>();
-        /*        targetX = (int)transform.position.x;
-                targetY = (int)transform.position.y;
-                row = targetY;
-                column = targetX;
-                previousRow = row;
-                previousColumn = column;*/
+        board = GameObject.FindWithTag("Board").GetComponent<Board>();
+        anim = GetComponent<Animator>();
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
-
+        shineDelaySeconds -= Time.deltaTime;
+        if(shineDelaySeconds <= 0)
+        {
+            shineDelaySeconds = shineDelay;
+            StartCoroutine(StartShine());
+        }
         targetX = column;
         targetY = row;
         move();
@@ -80,16 +89,15 @@ public class Dot : MonoBehaviour
             if (board.allDots[column, row] != gameObject)
             {
                 board.allDots[column, row] = gameObject;
+                findMatches.FindAllMatches();
             }
-            findMatches.FindAllMatches();
+           
         }
         else
         {
-
             // directly set the position
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = tempPosition;
-           
         }
 
 
@@ -101,10 +109,9 @@ public class Dot : MonoBehaviour
             if (board.allDots[column, row] != gameObject)
             {
                 board.allDots[column, row] = gameObject;
-                
+                findMatches.FindAllMatches();
             }
 
-            findMatches.FindAllMatches();
 
         }
         else
@@ -115,6 +122,19 @@ public class Dot : MonoBehaviour
             board.allDots[column, row] = gameObject;
         }
     }
+
+    IEnumerator StartShine()
+    {
+        anim.SetBool("Shine", true);
+        yield return null;
+        anim.SetBool("Shine", false);
+    }
+    public void PopAnimation()
+    {
+        anim.SetTrigger("Pop");
+    }
+
+
 
     public IEnumerator checkMoveCo()
     {
@@ -250,32 +270,49 @@ public class Dot : MonoBehaviour
     }
     public void MakeRowBomb()
     {
-        isRowBomb = true;
-        Debug.Log("is row bomb " + isRowBomb);
-        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
-        arrow.transform.parent = transform;
+        if(!isColumnBomb && !isColorBomb && !isAdjacentBomb)
+        {
+            isRowBomb = true;
+            Debug.Log("is row bomb " + isRowBomb);
+            GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+            arrow.transform.parent = transform;
+        }
+        
     }
     public void MakeColumnBomb()
     {
-        isColumnBomb = true;
-        Debug.Log("is ColumnBomb bomb " + isColumnBomb);
-        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
-        arrow.transform.parent = transform;
+        if(!isRowBomb && !isColorBomb && !isAdjacentBomb)
+        {
+            isColumnBomb = true;
+            Debug.Log("is ColumnBomb bomb " + isColumnBomb);
+            GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+            arrow.transform.parent = transform;
+        }
+        
     }
     public void MakeColorBomb()
     {
-        isColorBomb = true;
-        Debug.Log("is isColorBomb bomb " + isColorBomb);
-        GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
-        color.transform.parent = transform;
+        if(!isRowBomb && !isColumnBomb && !isAdjacentBomb)
+        {
+            isColorBomb = true;
+            Debug.Log("is isColorBomb bomb " + isColorBomb);
+            GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
+            color.transform.parent = transform;
+        }
+        
     }
 
     public void MakeAdjacentBomb()
     {
-        isAdjacentBomb = true;
-        Debug.Log("adjacentMarker");
-        GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
-        marker.transform.parent = transform;
+        if(!isRowBomb && !isColumnBomb && !isColorBomb)
+        {
+            isAdjacentBomb = true;
+            Debug.Log("adjacentMarker");
+            GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
+            marker.transform.parent = transform;
+        }
+        
+        
     }
 
 

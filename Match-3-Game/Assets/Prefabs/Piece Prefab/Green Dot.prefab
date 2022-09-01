@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7323441684477282424
+--- !u!1 &1016698761827108088
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1281469249264433390}
-  - component: {fileID: 6166125835091965253}
-  - component: {fileID: 2028309642597540451}
-  - component: {fileID: -9083742712792927732}
+  - component: {fileID: 8824429859590141038}
+  - component: {fileID: 4480069585684773317}
+  - component: {fileID: 8617670415633936099}
+  - component: {fileID: 7660074770794905228}
+  - component: {fileID: 967511960274554146}
   m_Layer: 0
   m_Name: Green Dot
   m_TagString: Green Dot
@@ -19,13 +20,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1281469249264433390
+--- !u!4 &8824429859590141038
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323441684477282424}
+  m_GameObject: {fileID: 1016698761827108088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.99, y: 5.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,13 +34,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6166125835091965253
+--- !u!212 &4480069585684773317
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323441684477282424}
+  m_GameObject: {fileID: 1016698761827108088}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -71,10 +72,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 485410963
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 531ea0065628ad04895f90c736c6ffc0, type: 3}
-  m_Color: {r: 0.7490196, g: 0.8470589, b: 0.8196079, a: 1}
+  m_Sprite: {fileID: -6474885864774867016, guid: 9f4c3c29552aa8746b6a818b258f5f14, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -84,13 +85,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &2028309642597540451
+--- !u!58 &8617670415633936099
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323441684477282424}
+  m_GameObject: {fileID: 1016698761827108088}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -100,13 +101,13 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.33333334
---- !u!114 &-9083742712792927732
+--- !u!114 &7660074770794905228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323441684477282424}
+  m_GameObject: {fileID: 1016698761827108088}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a5617c0ef93f2c4797ca7b94b4d7976, type: 3}
@@ -130,3 +131,22 @@ MonoBehaviour:
   rowArrow: {fileID: 7623691989475963587, guid: b6943d044015b0748bb32642244f6b90, type: 3}
   columnArrow: {fileID: 5407342809831802978, guid: 2f3d293d6b9192845beed320d56f6444, type: 3}
   colorBomb: {fileID: 5705702528696156478, guid: 350952820658d004dbc3229df802608d, type: 3}
+--- !u!95 &967511960274554146
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016698761827108088}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5bb8f7282f1efaf46aea9454fa4c6e89, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

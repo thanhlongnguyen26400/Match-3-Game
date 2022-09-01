@@ -14,11 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 6
   height: 8
-  boardLayout: []
+  boardLayout:
+  - x: 0
+    y: 0
+    tileKind: 0
+  - x: 5
+    y: 7
+    tileKind: 0
+  - x: 5
+    y: 0
+    tileKind: 0
+  - x: 0
+    y: 7
+    tileKind: 0
   Dots:
   - {fileID: 676425000376019735, guid: 6c36d9d1f6cc1eb48b05f53b542e5d75, type: 3}
   - {fileID: 2819731608259793555, guid: af2ffd15f39c14f4fb06ab871c2c77a5, type: 3}
-  - {fileID: 7323441684477282424, guid: 70fc369bd7b332447802e90926c37c5b, type: 3}
+  - {fileID: 1016698761827108088, guid: 70fc369bd7b332447802e90926c37c5b, type: 3}
   - {fileID: 266149346713609054, guid: af9c33adc2576054ca17bc40a201311c, type: 3}
   - {fileID: 2475088439771753524, guid: e0ced0411482f964098beb166ca2625d, type: 3}
   scoreGoals: f401000020030000
@@ -26,11 +38,11 @@ MonoBehaviour:
     gameType: 1
     counterValue: 50
   levelGoals:
-  - numberNeeded: 5
-    numberCollected: 7
-    goalSprite: {fileID: 21300000, guid: ed0c19752f702e84ea495316accddf7c, type: 3}
+  - numberNeeded: 20
+    numberCollected: 25
+    goalSprite: {fileID: 3135775334252433128, guid: 9f4c3c29552aa8746b6a818b258f5f14, type: 3}
     matchValue: Orange Dot
-  - numberNeeded: 5
-    numberCollected: 7
-    goalSprite: {fileID: 21300000, guid: cd7c3907c205d1f43a2d7f16309f84d7, type: 3}
+  - numberNeeded: 30
+    numberCollected: 25
+    goalSprite: {fileID: 3768561128037344461, guid: 9f4c3c29552aa8746b6a818b258f5f14, type: 3}
     matchValue: Purple Dot

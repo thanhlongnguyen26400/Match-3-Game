@@ -1597,7 +1597,7 @@ GameObject:
   - component: {fileID: 844302368}
   m_Layer: 0
   m_Name: Board
-  m_TagString: Untagged
+  m_TagString: Board
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1634,7 +1634,7 @@ MonoBehaviour:
   currentState: 1
   dots:
   - {fileID: 266149346713609054, guid: af9c33adc2576054ca17bc40a201311c, type: 3}
-  - {fileID: 7323441684477282424, guid: 70fc369bd7b332447802e90926c37c5b, type: 3}
+  - {fileID: 1016698761827108088, guid: 70fc369bd7b332447802e90926c37c5b, type: 3}
   - {fileID: 2819731608259793555, guid: af2ffd15f39c14f4fb06ab871c2c77a5, type: 3}
   - {fileID: 676425000376019735, guid: 6c36d9d1f6cc1eb48b05f53b542e5d75, type: 3}
   - {fileID: 2109684001560261986, guid: 05c5b3c75078c6640b9f3e424c97c7f9, type: 3}
@@ -1642,12 +1642,13 @@ MonoBehaviour:
   tilePrefab: {fileID: 8402575694244019548, guid: 5faed29ac8a1df547b2c7835bddc5acf, type: 3}
   breakableTilePrefab: {fileID: 3195358017605936654, guid: ea0dfee17cc52964c9178a8862fc4b1f, type: 3}
   destroyEffect: {fileID: 2676294267315333907, guid: f3c8dd173b0334a4f9a35e74889aa5ed, type: 3}
+  lockTilePrefab: {fileID: 0}
   currentDot: {fileID: 0}
   refillDelay: 0.5
   scoreGoals: 2c010000
   width: 6
   height: 8
-  offSet: 10
+  offSet: 30
   boardLayout: []
 --- !u!114 &844302367
 MonoBehaviour:
@@ -3613,9 +3614,39 @@ MonoBehaviour:
     numberCollected: 0
     goalSprite: {fileID: 21300000, guid: 027045b47ace902499f5a67e7be4d647, type: 3}
     matchValue: Yellow Dot
+  - numberNeeded: 5
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 027045b47ace902499f5a67e7be4d647, type: 3}
+    matchValue: Yellow Dot
+  - numberNeeded: 5
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 027045b47ace902499f5a67e7be4d647, type: 3}
+    matchValue: Yellow Dot
+  - numberNeeded: 5
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 027045b47ace902499f5a67e7be4d647, type: 3}
+    matchValue: Yellow Dot
+  - numberNeeded: 5
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 027045b47ace902499f5a67e7be4d647, type: 3}
+    matchValue: Yellow Dot
+  - numberNeeded: 5
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 027045b47ace902499f5a67e7be4d647, type: 3}
+    matchValue: Yellow Dot
+  - numberNeeded: 5
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 027045b47ace902499f5a67e7be4d647, type: 3}
+    matchValue: Yellow Dot
   goalPrefab: {fileID: 4866809484728307598, guid: a0a670ee6b4f7254cacaf133a02f00aa, type: 3}
   goalIntroParent: {fileID: 723782631}
   goalGame:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

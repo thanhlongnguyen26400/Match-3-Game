@@ -23,7 +23,7 @@ public class ConfirmPanel : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         gameData = FindObjectOfType<GameData>();
         LoadData();

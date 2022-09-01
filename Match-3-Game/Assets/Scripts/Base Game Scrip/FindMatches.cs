@@ -23,7 +23,7 @@ public class FindMatches : MonoBehaviour
 
     IEnumerator FindAllMatchesCo()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         for (int x = 0; x < board.width; x++)
         {
             for (int y = 0; y < board.height; y++)
@@ -258,21 +258,25 @@ public class FindMatches : MonoBehaviour
             // is the other piece matches
             else
             {
-                Dot otherDot = board.currentDot.otherDot.GetComponent<Dot>();
-                if (board.currentDot.otherDot != null && otherDot.isMatches)
+                if (board.currentDot.otherDot != null)
                 {
-                    // is the other Dot matched?
-                    otherDot.isMatches = false;
-                    if ((otherDot.swipeAngle > -45 && otherDot.swipeAngle <= 45)
-                    || (otherDot.swipeAngle < -135 || otherDot.swipeAngle >= 135))
+                    Dot otherDot = board.currentDot.otherDot.GetComponent<Dot>();
+                    if (otherDot.isMatches)
                     {
-                        otherDot.MakeRowBomb();
-                    }
-                    else
-                    {
-                        otherDot.MakeColumnBomb();
+                        // is the other Dot matched?
+                        otherDot.isMatches = false;
+                        if ((otherDot.swipeAngle > -45 && otherDot.swipeAngle <= 45)
+                        || (otherDot.swipeAngle < -135 || otherDot.swipeAngle >= 135))
+                        {
+                            otherDot.MakeRowBomb();
+                        }
+                        else
+                        {
+                            otherDot.MakeColumnBomb();
+                        }
                     }
                 }
+                    
             }
         }
         

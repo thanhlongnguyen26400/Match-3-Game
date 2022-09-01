@@ -14,24 +14,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 7
   height: 7
-  boardLayout: []
+  boardLayout:
+  - x: 0
+    y: 0
+    tileKind: 0
+  - x: 6
+    y: 6
+    tileKind: 0
+  - x: 0
+    y: 6
+    tileKind: 0
+  - x: 6
+    y: 0
+    tileKind: 0
   Dots:
   - {fileID: 266149346713609054, guid: af9c33adc2576054ca17bc40a201311c, type: 3}
-  - {fileID: 7323441684477282424, guid: 70fc369bd7b332447802e90926c37c5b, type: 3}
+  - {fileID: 2109684001560261986, guid: 05c5b3c75078c6640b9f3e424c97c7f9, type: 3}
   - {fileID: 2819731608259793555, guid: af2ffd15f39c14f4fb06ab871c2c77a5, type: 3}
   - {fileID: 676425000376019735, guid: 6c36d9d1f6cc1eb48b05f53b542e5d75, type: 3}
   scoreGoals: 2c010000bc020000
   endGameRequirements:
     gameType: 1
-    counterValue: 45
+    counterValue: 100
   levelGoals:
-  - numberNeeded: 10
+  - numberNeeded: 30
     numberCollected: 0
-    goalSprite: {fileID: 21300000, guid: 3104290edc39023498229e8cf3609234, type: 3}
+    goalSprite: {fileID: -2039436178635229218, guid: 9f4c3c29552aa8746b6a818b258f5f14, type: 3}
     matchValue: Blue Dot
   - numberNeeded: 5
     numberCollected: 0
-    goalSprite: {fileID: 21300000, guid: 531ea0065628ad04895f90c736c6ffc0, type: 3}
+    goalSprite: {fileID: -6474885864774867016, guid: 9f4c3c29552aa8746b6a818b258f5f14, type: 3}
     matchValue: Green Dot
   - numberNeeded: 0
     numberCollected: 0
