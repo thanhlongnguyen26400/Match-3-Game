@@ -10,6 +10,7 @@ public class ConfirmPanel : MonoBehaviour
     [Header("Level Info")]
     public string levelToLoad;
     private int startsActive;
+    public World world;
     public int level;
     private GameData gameData;
     private int highScore;
@@ -18,9 +19,8 @@ public class ConfirmPanel : MonoBehaviour
     public Image[] stars;
     public Text hightScoreText;
     public Text StarText;
-    
-
-
+    private GoalManager goalManager;
+    private BlankGoal[] levelGoals;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -29,6 +29,10 @@ public class ConfirmPanel : MonoBehaviour
         LoadData();
         ActivateStars();
         SetText();
+    }
+    private void Start()
+    {
+        goalManager = FindObjectOfType<GoalManager>();
     }
 
     void LoadData()
@@ -63,12 +67,17 @@ public class ConfirmPanel : MonoBehaviour
 
     public void Cancel()
     {
+        for (int i = 0; i < startsActive; i++)
+        {
+            stars[i].enabled = false;
+        }
         this.gameObject.SetActive(false);
 
     }
 
     public void Play()
     {
+        
         PlayerPrefs.SetInt("Current Level", level - 1);
         SceneManager.LoadScene(levelToLoad);
     }

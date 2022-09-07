@@ -100,11 +100,18 @@ public class GoalManager : MonoBehaviour
             if(endGameManager != null)
             {
                 endGameManager.WinGame();
+
             }
-            Debug.Log("You win");
         }
 
     } 
+    public void ResetNumberCollected()
+    {
+        for (int i = 0; i < levelGoals.Length; i++)
+        {
+            levelGoals[i].numberCollected = 0;
+        }
+    }
 
     public void CompareGoal(string goalToCompare)
     {

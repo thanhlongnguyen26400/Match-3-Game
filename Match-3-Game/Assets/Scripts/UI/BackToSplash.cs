@@ -10,6 +10,8 @@ public class BackToSplash : MonoBehaviour
     private Board board;
     private ScoreManager scoreManager;
 
+
+
     public void WinOK()
     {
         if (gameData != null)
@@ -21,9 +23,15 @@ public class BackToSplash : MonoBehaviour
             {
                 gameData.saveData.highScores[board.level] = scoreManager.score;
             }
-            gameData.Save();
+            if (gameData.saveData.stars[board.level] >= 1)
+            {
+                gameData.saveData.stars[board.level] = 3;
+            }
+            gameData.saveData.stars[board.level] = Random.Range(1, 4);
 
+            gameData.Save();
         }
+        
         SceneManager.LoadScene(sceneToLoad);
     }
 

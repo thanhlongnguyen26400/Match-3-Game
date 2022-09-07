@@ -2824,6 +2824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelToLoad: Main
+  world: {fileID: 0}
   level: 0
   stars:
   - {fileID: 2065703210}

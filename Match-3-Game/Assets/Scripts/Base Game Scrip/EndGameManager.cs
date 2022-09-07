@@ -36,6 +36,7 @@ public class EndGameManager : MonoBehaviour
     private Board board;
     private float timerSeconds;
     private FadePanelController fadePanelController;
+    private GoalManager goalManager;
 
 
     private void Awake()
@@ -49,6 +50,7 @@ public class EndGameManager : MonoBehaviour
     {
         board = FindObjectOfType<Board>();
         fadePanelController = FindObjectOfType<FadePanelController>();
+        goalManager = FindObjectOfType<GoalManager>();
         SetGameType();
         SetupGame();
 
@@ -107,9 +109,9 @@ public class EndGameManager : MonoBehaviour
         currentCounterValue = 0;
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
+        goalManager.ResetNumberCollected();
         fade.GameOver();
 
-        Debug.Log("You win");
     }
 
     public void LoseGame()
@@ -119,8 +121,8 @@ public class EndGameManager : MonoBehaviour
         currentCounterValue = 0;
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
+        goalManager.ResetNumberCollected();
         fade.GameOver();
-        Debug.Log("You lose");
     }
 
     // Update is called once per frame

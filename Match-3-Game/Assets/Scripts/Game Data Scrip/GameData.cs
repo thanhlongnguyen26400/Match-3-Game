@@ -38,7 +38,6 @@ public class GameData : MonoBehaviour
     }
     private void Start()
     {
-
     }
 
     public void Save()
@@ -57,8 +56,6 @@ public class GameData : MonoBehaviour
         // close the data stream
         file.Close();
 
-
-
     }
     public void Load()
     {
@@ -71,7 +68,6 @@ public class GameData : MonoBehaviour
             saveData = formatter.Deserialize(file) as SaveData;
             file.Close();
             Debug.Log("file + " + file);
-
         }
     }
     private void OnApplicationQuit()
